@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <iostream>
 #include "Sudoku.h"
 
 int main(){
