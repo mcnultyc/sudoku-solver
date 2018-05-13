@@ -4,7 +4,7 @@
 
 int main(){
 	
-	Sudoku sudoku("easy.txt");
+	Sudoku sudoku("hardest-sudoku.txt");
 	sudoku.print();
 	
 	std::cout << "\n\n";
