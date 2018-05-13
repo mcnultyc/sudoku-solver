@@ -26,8 +26,6 @@ class Sudoku{
 	explicit Sudoku(const std::string& file_name);
 	void print();
 	std::string solve();
-	void print_units();
-	void print_peers();
 
 	private:
 

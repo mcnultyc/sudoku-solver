@@ -6,41 +6,9 @@ Sudoku::Sudoku(const std::string& file_name)
 	init(file_name);
 }
 
-
-void Sudoku::print_units(){
-
-	for(int i = 0; i < SQUARES; i++){
-		std::cout << i << ":\n";
-		std::cout << "{";
-		for(const hash_set<int>& u: units[i]){
-			std::cout << "{";
-			for(const int& s: u)
-				std::cout << s << ' ';
-			std::cout << "}\n";
-		}	
-		std::cout << " }\n\n";
-	}
-}
-
-void Sudoku::print_peers(){
-
-	for(int i = 0; i < SQUARES; i++){
-		std::cout << i << ":\n";
-		std::cout << "{\n";
-		for(const int& s: peers[i])
-			std::cout << s << ' ';
-		std::cout << "}\n\n";
-	}
-}
-
 void Sudoku::init(const std::string& file_name){
 	std::ifstream infile(file_name);
 	
-	// units must be created before peers
-	init_units();	
-	// create units
-	init_peers();
-
 	if(infile.is_open()){
 		int i = 0, c;
 		while((c = infile.get()) != EOF && i < SQUARES){
@@ -49,42 +17,40 @@ void Sudoku::init(const std::string& file_name){
 				i++;
 			}
 		}		
-	}	
+	}
+	
+	init_units();	
+	init_peers();	
 }
 
 void Sudoku::create_unit_list(hash_sets<int>& unit_list){
-	
-	for(int i = 0; i < DIGITS; i++){
-		hash_set<int> unit;
+
+	unit_list.resize(DIGITS * 3);
+	int idx = 0;
+	for(int i = 0; i < DIGITS; i++, idx++){
 		for(int j = 0; j < DIGITS; j++){
 			int s = DIGITS * i + j;
-			unit.insert(s);
+			unit_list[idx].insert(s);
 		}
-		unit_list.push_back(unit);
 	}
-
-	for(int i = 0; i < DIGITS; i++){
-		hash_set<int> unit;
+	
+	for(int i = 0; i < DIGITS; i++, idx++){
 		for(int j = 0; j < DIGITS; j++){
 			int s = DIGITS * j + i;
-			unit.insert(s);
+			unit_list[idx].insert(s);
 		}
-		unit_list.push_back(unit);
 	}
 
 	for(int i = 0; i < DIGITS; i += 3){
-		for(int j = 0; j < DIGITS; j += 3){
-			hash_set<int> unit;
+		for(int j = 0; j < DIGITS; j += 3, idx++){
 			for(int r = i; r < i + 3; r++){
 				for(int c = j; c < j + 3; c++){
 					int s = DIGITS * r + c;
-					unit.insert(s);
+					unit_list[idx].insert(s);
 				}
 			}
-			unit_list.push_back(unit);
 		}
-	}
-
+	}	
 }
 
 void Sudoku::init_units(){
@@ -98,15 +64,6 @@ void Sudoku::init_units(){
 				units[i].push_back(u);
 		}
 	}
-
-	for(int i = 0; i < SQUARES; i++){
-		for(int j = 0; j < UNITS; j++){
-			if(units[i][j].size() != DIGITS){
-				std::cout << "error: units != 9\n";
-			}		
-		}
-	}
-
 }
 
 void Sudoku::init_peers(){
@@ -119,12 +76,6 @@ void Sudoku::init_peers(){
 			}
 		}
 	}
-
-	for(int i = 0; i < SQUARES; i++){
-		if(peers[i].size() != PEERS){
-			std::cout << "error: peers != 20\n";
-		}
-	}	
 }
 
 void Sudoku::print(){
