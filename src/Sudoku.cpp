@@ -235,6 +235,9 @@ bool Sudoku::search(hash_sets<char>& vals){
 
 std::string Sudoku::solve(){		
 	
+	if(solution.size() == SQUARES)
+		return solution;	
+
 	hash_sets<char> vals(SQUARES);
 	for(int i = 0; i < SQUARES; i++){
 		for(char c = '1'; c <= '9'; c++)
