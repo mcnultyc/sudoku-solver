@@ -12,6 +12,13 @@
 #define UNITS 3
 #define PEERS 20
 
+struct Entry{
+	int sqr;
+	char digit;
+
+	Entry(int s, char d)
+		: sqr(s), digit(d){}
+};
 
 class Sudoku{	
 	
@@ -23,31 +30,32 @@ class Sudoku{
 
 	public:
 
-	explicit Sudoku(const std::string& file_name);
-	void print();
+	explicit 	Sudoku(const std::string& file_name);
+	void 		print();
 	std::string solve();
+	std::vector<Entry>	search_report();
 
 	private:
 
-	void init(const std::string& file_name);
-	void init_grid(const std::string& file_name);    	
-	void init_peers();
-	void init_units();
-	void create_values(hash_sets<char>& vals);
-	void create_unit_list(hash_sets<int>& unit_list);
+	void		init(const std::string& file_name);
+	void 		init_grid(const std::string& file_name);    	
+	void 		init_peers();
+	void 		init_units();
+	void 		create_values(hash_sets<char>& vals);
+	void 		create_unit_list(hash_sets<int>& unit_list);
 
 	inline bool solved(const hash_sets<char>& vals);	
-	inline int min_sqr(const hash_sets<char>& vals);
+	inline int	min_sqr(const hash_sets<char>& vals);
 
-	bool assign(hash_sets<char>& vals, int sqr, char digit);
-	bool eliminate(hash_sets<char>& vals, int sqr, char digit);	
-	bool search(hash_sets<char>& vals);	
+	bool 		assign(hash_sets<char>& vals, int sqr, char digit);
+	bool		eliminate(hash_sets<char>& vals, int sqr, char digit);	
+	bool 		search(hash_sets<char>& vals);
 
-	std::string grid;	
-	std::string solution;
-	// units and peers for each square
-	hash_set<int> peers[SQUARES];
-	hash_sets<int> units[SQUARES];
+	std::string 			grid;	
+	std::string 			solution;
+	std::vector<Entry> 		report;	
+	hash_set<int> 			peers[SQUARES];
+	hash_sets<int> 			units[SQUARES];
 };
 
 #endif

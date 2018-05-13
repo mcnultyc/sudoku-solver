@@ -92,6 +92,10 @@ void Sudoku::print(){
 	}
 }
 
+std::vector<Entry> Sudoku::search_report(){
+	return report;
+}
+
 bool Sudoku::solved(const hash_sets<char>& vals){
 	
 	for(int i = 0; i < SQUARES; i++){
@@ -114,7 +118,16 @@ int Sudoku::min_sqr(const hash_sets<char>& vals){
 }
 
 bool Sudoku::assign(hash_sets<char>& vals, int sqr, char digit){
-		
+	
+	if(report.size() > 0){
+		Entry last = report.back();
+		if(last.sqr != sqr || last.digit != digit)
+			report.emplace_back(sqr, digit);
+	}
+	else{
+		report.emplace_back(sqr, digit);	
+	}
+	
 	hash_set<char> values = vals[sqr];	
 	for(const char& d: values){
 		if(d != digit){
