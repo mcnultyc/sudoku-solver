@@ -7,8 +7,6 @@ int main(){
 	Sudoku sudoku("hardest-sudoku.txt");
 	
 	std::string sol(sudoku.solve());
-	std::vector<Entry> search_report(sudoku.search_report());
-	std::string search_sol(SQUARES, '0');
 	
 	std::cout << "solution:\n";	
 	for(int i = 0; i < DIGITS; i++){

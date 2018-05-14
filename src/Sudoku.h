@@ -12,14 +12,6 @@
 #define UNITS 3
 #define PEERS 20
 
-struct Entry{
-	int sqr;
-	char digit;
-
-	Entry(int s, char d)
-		: sqr(s), digit(d){}
-};
-
 class Sudoku{	
 	
 	template<typename T>
@@ -33,15 +25,13 @@ class Sudoku{
 	explicit 	Sudoku(const std::string& file_name);
 	void 		print();
 	std::string solve();
-	std::vector<Entry>	search_report();
-
+	
 	private:
 
 	void		init(const std::string& file_name);
 	void 		init_grid(const std::string& file_name);    	
 	void 		init_peers();
 	void 		init_units();
-	void 		create_values(hash_sets<char>& vals);
 	void 		create_unit_list(hash_sets<int>& unit_list);
 
 	inline bool solved(const hash_sets<char>& vals);	
@@ -53,7 +43,6 @@ class Sudoku{
 
 	std::string 			grid;	
 	std::string 			solution;
-	std::vector<Entry> 		report;	
 	hash_set<int> 			peers[SQUARES];
 	hash_sets<int> 			units[SQUARES];
 };
