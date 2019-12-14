@@ -1,2 +1,2 @@
 # sudoku
-Sudoku solver
+Sudoku solver that using constraint propogation.
